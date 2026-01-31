@@ -4,7 +4,7 @@ use std::{cmp::Ordering, io};
 fn main() {
     println!("--------- Guess the number ---------");
 
-    let secret_number = rand::thread_rng().gen_range(1..=6);
+    let secret_number = rand::thread_rng().gen_range(1..=100);
     let mut try_take: u32 = 0;
 
     loop {
@@ -23,7 +23,17 @@ fn main() {
                 println!("--------- You Guess is correct");
                 break;
             }
-            _ => println!("--------- Retry"),
+            _ => {
+                println!("--------- Retry");
+
+                let wrong =
+                    ((secret_number as f64 - guess as f64).abs() / secret_number as f64) * 100.0;
+
+                let correct = 100.0 - wrong;
+
+                println!("Wrong {wrong} %");
+                println!("Correct {correct} %");
+            }
         }
     }
 
